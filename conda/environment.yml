@@ -1,8 +1,7 @@
 name: GAIL-Formal_Methods
 channels:
-  - conda-forge
   - defaults
 dependencies:
-  - python=3
-prefix: /Users/nicholasrenninger/anaconda3/envs/GAIL-Formal_Methods
+  - python=3.7
+prefix: /home/nick/anaconda3/envs/GAIL-Formal_Methods
 

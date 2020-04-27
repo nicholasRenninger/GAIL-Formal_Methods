@@ -1,3 +1,6 @@
 [submodule "ASEN6519-DMU-Project-Paper"]
 	path = ASEN6519-DMU-Project-Paper
 	url = https://github.com/nicholasRenninger/ASEN6519-DMU-Project-Paper.git
+[submodule "stable-baselines"]
+	path = stable-baselines
+	url = https://github.com/hill-a/stable-baselines.git
