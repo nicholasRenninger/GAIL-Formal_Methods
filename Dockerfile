@@ -35,10 +35,10 @@ RUN rm -rf /var/lib/apt/lists/*
 
 # BUT NOT dependencies
 # put these in the section at the bottom of the file to
-RUN pip install --upgrade pip
-RUN pip install jupyterthemes
-RUN pip install --upgrade jupyterthemes
-RUN pip install jupyter_contrib_nbextensions
+RUN pip install --upgrade pip \
+    jupyterthemes \
+    --upgrade jupyterthemes \
+    jupyter_contrib_nbextensions
 
 # configure jupyter notebook extensions
 RUN jupyter contrib nbextension install --user
@@ -57,8 +57,10 @@ RUN jupyter nbextension enable codefolding/edit
 RUN jupyter nbextension enable freeze/main
 RUN jupyter nbextension enable runtools/main
 RUN jupyter nbextension enable codemirror_mode_extensions/main
-RUN mkdir -p "`jupyter --config-dir`/custom/"
-RUN echo "require(["codemirror/keymap/sublime", "notebook/js/cell", "base/js/namespace"], function(sublime_keymap, cell, IPython) { // setTimeout(function(){ // uncomment line to fake race-condition cell.Cell.options_default.cm_config.keyMap = 'sublime'; var cells = IPython.notebook.get_cells(); for(var cl=0; cl< cells.length ; cl++){ cells[cl].code_mirror.setOption('keyMap', 'sublime'); } // }, 1000)// uncomment line to fake race condition } );" >> "`jupyter --config-dir`/custom/custom.js"
+
+# try to get sublime keymaps
+RUN mkdir -p "$(jupyter --config-dir)/custom/"
+RUN echo "require(["codemirror/keymap/sublime", "notebook/js/cell", "base/js/namespace"], function(sublime_keymap, cell, IPython) { // setTimeout(function(){ // uncomment line to fake race-condition cell.Cell.options_default.cm_config.keyMap = 'sublime'; var cells = IPython.notebook.get_cells(); for(var cl=0; cl< cells.length ; cl++){ cells[cl].code_mirror.setOption('keyMap', 'sublime'); } // }, 1000)// uncomment line to fake race condition } );" >> "$(jupyter --config-dir)/custom/custom.js"
 
 # configure jupyter notebook theme
 RUN jt -t onedork -fs 95 -altp -tfs 11 -nfs 115 -cellw 88% -T
@@ -84,8 +86,11 @@ RUN rm -rf $HOME/.cache/pip
 
 # don't run shit as root :)
 ENV USR "ferga"
+RUN groupadd -g 999 appuser && \
+    useradd -r -u 999 -g appuser $USR
 
-ENV CODE_DIR /home/$USR/GAIL-Formal_Methods
+ENV USR_HOME /home/$USR
+ENV CODE_DIR $USR_HOME/GAIL-Formal_Methods
 
 ENV CMD_DIR scripts
 ENV CMD_SCRIPT docker-entrypoint.sh
@@ -98,7 +103,8 @@ ENV CMD_PATH $CMD_DIR/$CMD_SCRIPT
 #######################################
 
 # then, prepare the container's application to run
-RUN mkdir -p $CODE_DIR/$CMD_PATH
+RUN mkdir -p $CODE_DIR/$CMD_DIR && \
+    chown -R $USR:appuser $USR_HOME
 WORKDIR $CODE_DIR
 
 # have to do temp copying stuff so things are moved to the container from
@@ -106,12 +112,12 @@ WORKDIR $CODE_DIR
 # commands on the moved file will only stack if done in the same RUN command,
 # as RUN records the changes in it's own environment - changes aren't shared
 # across RUNs
-COPY $CMD_PATH /tmp/$CMD_PATH
-RUN mv /tmp/$CMD_PATH $CODE_DIR/$CMD_PATH && \
-    chmod +x $CODE_DIR/$CMD_PATH
+COPY --chown=$USR:appuser $CMD_PATH $CODE_DIR/$CMD_PATH
+
+RUN chmod +x $CODE_DIR/$CMD_PATH && \
+    chown -R $USR:appuser $CODE_DIR/$CMD_PATH
 
 # now Transform™ into the user -> no more root for le safties
-RUN useradd -s /bin/bash $USR
 USER $USR
 
 # here, the default application of the container is in $CMD_SCRIPT, but if the

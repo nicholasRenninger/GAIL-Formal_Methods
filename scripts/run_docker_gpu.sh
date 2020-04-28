@@ -15,9 +15,6 @@ else
   NVIDIA_ARG="--gpus all"
 fi
 
-# this is where the experiments will be run in the
-# container image
-CODE_LOC="/root/code/GAIL-Formal_Methods"
 
 # this is the image name and tag
 CONTAINER_TAG=gail_formal_methods:latest
@@ -28,6 +25,10 @@ CONTAINER_NAME="IL_BOX"
 # don't run shit as root :)
 CONTAINER_USER="ferga"
 CONTAINER_UID=69
+
+# this is where the experiments will be run in the
+# container image
+CODE_LOC="/home/$USR/GAIL-Formal_Methods"
 
 # give the hostname for a nice touch when using the box interactively
 CONTAINER_HOSTNAME="licious"
