@@ -1,10 +1,9 @@
 #!/bin/bash
 
 CPU_PARENT=tensorflow/tensorflow:1.15.2-py3-jupyter
-
 GPU_PARENT=tensorflow/tensorflow:1.15.2-gpu-py3-jupyter
 
-TAG=stable_baselines_modded
+TAG=gail_formal_methods
 
 if [[ ${USE_GPU} == "True" ]]; then
   PARENT=${GPU_PARENT}

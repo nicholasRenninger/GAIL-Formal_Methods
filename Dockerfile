@@ -28,42 +28,6 @@ RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/*
 
 
-# # now get python3.7 installed on the system
-# RUN apt-get update -y && apt-get upgrade -y
-# RUN apt-get install software-properties-common -y
-
-# # contains many built pythons for us :)))
-# RUN add-apt-repository ppa:deadsnakes/ppa -y
-# RUN apt-get update -y && apt-get upgrade -y
-# RUN apt-get install python3.7 -y
-
-
-#######################################
-###### development var to change ######
-#######################################
-
-ENV CODE_DIR /root/code/GAIL-Formal_Methods
-
-ENV CMD_DIR scripts
-ENV CMD_SCRIPT docker-entrypoint.sh
-ENV CMD_PATH $CMD_DIR/$CMD_SCRIPT
-
-ENV VIRTUAL_ENV /root/venv
-
-
-
-#######################################
-###### python  environment setup ######
-#######################################
-
-RUN pip install pip --upgrade
-# RUN pip install virtualenv
-# RUN virtualenv $VIRTUAL_ENV --python=python3.7
-
-# # make our own "activate $venv" by updating the path
-# ENV PATH=$VIRTUAL_ENV/bin:$PATH
-
-
 
 #######################################
 ###### install jupyter dev tools ######
@@ -72,7 +36,6 @@ RUN pip install pip --upgrade
 # BUT NOT dependencies
 # put these in the section at the bottom of the file to
 RUN pip install --upgrade pip
-# RUN pip install notebook
 RUN pip install jupyterthemes
 RUN pip install --upgrade jupyterthemes
 RUN pip install jupyter_contrib_nbextensions
@@ -107,11 +70,26 @@ RUN jt -t onedork -fs 95 -altp -tfs 11 -nfs 115 -cellw 88% -T
 #######################################
 
 # add any packages here that the container application may need
-# RUN pip install "tensorflow>=1.15.0"
 RUN pip install stable-baselines[mpi]
 
 # cleanup
 RUN rm -rf $HOME/.cache/pip
+
+
+
+
+#######################################
+###### development var to change ######
+#######################################
+
+# don't run shit as root :)
+ENV USR "ferga"
+
+ENV CODE_DIR /home/$USR/GAIL-Formal_Methods
+
+ENV CMD_DIR scripts
+ENV CMD_SCRIPT docker-entrypoint.sh
+ENV CMD_PATH $CMD_DIR/$CMD_SCRIPT
 
 
 
@@ -131,6 +109,10 @@ WORKDIR $CODE_DIR
 COPY $CMD_PATH /tmp/$CMD_PATH
 RUN mv /tmp/$CMD_PATH $CODE_DIR/$CMD_PATH && \
     chmod +x $CODE_DIR/$CMD_PATH
+
+# now Transform™ into the user -> no more root for le safties
+RUN useradd -s /bin/bash $USR
+USER $USR
 
 # here, the default application of the container is in $CMD_SCRIPT, but if the
 # user wants to use the container differently, he / she can just go ahead and

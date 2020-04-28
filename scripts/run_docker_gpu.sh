@@ -20,10 +20,14 @@ fi
 CODE_LOC="/root/code/GAIL-Formal_Methods"
 
 # this is the image name and tag
-CONTAINER_TAG=stable_baselines_modded:latest
+CONTAINER_TAG=gail_formal_methods:latest
 
 # name the running container for better visibility
 CONTAINER_NAME="IL_BOX"
+
+# don't run shit as root :)
+CONTAINER_USER="ferga"
+CONTAINER_UID=69
 
 # give the hostname for a nice touch when using the box interactively
 CONTAINER_HOSTNAME="licious"
