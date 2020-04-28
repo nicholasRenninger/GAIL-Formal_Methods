@@ -5,4 +5,4 @@
 # harmlessly, I usually append || true to it.
 set -e
 
-echo "entry script running"
+jupyter notebook --no-browser --allow-root --port 1234
