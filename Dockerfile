@@ -28,6 +28,15 @@ RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/*
 
 
+# # now get python3.7 installed on the system
+# RUN apt-get update -y && apt-get upgrade -y
+# RUN apt-get install software-properties-common -y
+
+# # contains many built pythons for us :)))
+# RUN add-apt-repository ppa:deadsnakes/ppa -y
+# RUN apt-get update -y && apt-get upgrade -y
+# RUN apt-get install python3.7 -y
+
 
 #######################################
 ###### development var to change ######
@@ -48,11 +57,11 @@ ENV VIRTUAL_ENV /root/venv
 #######################################
 
 RUN pip install pip --upgrade
-RUN pip install virtualenv
-RUN virtualenv $VIRTUAL_ENV --python=python3
+# RUN pip install virtualenv
+# RUN virtualenv $VIRTUAL_ENV --python=python3.7
 
-# make our own "activate $venv" by updating the path
-ENV PATH=$VIRTUAL_ENV/bin:$PATH
+# # make our own "activate $venv" by updating the path
+# ENV PATH=$VIRTUAL_ENV/bin:$PATH
 
 
 
@@ -63,7 +72,7 @@ ENV PATH=$VIRTUAL_ENV/bin:$PATH
 # BUT NOT dependencies
 # put these in the section at the bottom of the file to
 RUN pip install --upgrade pip
-RUN pip install notebook
+# RUN pip install notebook
 RUN pip install jupyterthemes
 RUN pip install --upgrade jupyterthemes
 RUN pip install jupyter_contrib_nbextensions
@@ -86,10 +95,7 @@ RUN jupyter nbextension enable freeze/main
 RUN jupyter nbextension enable runtools/main
 RUN jupyter nbextension enable codemirror_mode_extensions/main
 RUN mkdir -p "`jupyter --config-dir`/custom/"
-RUN echo "require(["codemirror/keymap/sublime", "notebook/js/cell"], \
-    function(sublime_keymap, cell) { \
-        cell.Cell.options_default.cm_config.keyMap = 'sublime'; \
-    });" >> "`jupyter --config-dir`/custom/custom.js"
+RUN echo "require(["codemirror/keymap/sublime", "notebook/js/cell", "base/js/namespace"], function(sublime_keymap, cell, IPython) { // setTimeout(function(){ // uncomment line to fake race-condition cell.Cell.options_default.cm_config.keyMap = 'sublime'; var cells = IPython.notebook.get_cells(); for(var cl=0; cl< cells.length ; cl++){ cells[cl].code_mirror.setOption('keyMap', 'sublime'); } // }, 1000)// uncomment line to fake race condition } );" >> "`jupyter --config-dir`/custom/custom.js"
 
 # configure jupyter notebook theme
 RUN jt -t onedork -fs 95 -altp -tfs 11 -nfs 115 -cellw 88% -T
@@ -101,6 +107,7 @@ RUN jt -t onedork -fs 95 -altp -tfs 11 -nfs 115 -cellw 88% -T
 #######################################
 
 # add any packages here that the container application may need
+# RUN pip install "tensorflow>=1.15.0"
 RUN pip install stable-baselines[mpi]
 
 # cleanup

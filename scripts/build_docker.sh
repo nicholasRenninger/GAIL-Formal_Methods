@@ -1,7 +1,8 @@
 #!/bin/bash
 
-CPU_PARENT=baseimage-docker
-GPU_PARENT=nvidia/cuda:9.0-cudnn7-runtime-ubuntu16.04
+CPU_PARENT=tensorflow/tensorflow:1.15.2-py3-jupyter
+
+GPU_PARENT=tensorflow/tensorflow:1.15.2-gpu-py3-jupyter
 
 TAG=stable_baselines_modded
 
