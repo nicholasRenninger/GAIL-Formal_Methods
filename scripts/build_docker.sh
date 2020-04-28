@@ -12,5 +12,11 @@ else
   TAG="${TAG}-cpu"
 fi
 
+
+# build such that the container user is the same as the host user
 docker build --build-arg PARENT_IMAGE=${PARENT} \
-  --build-arg USE_GPU=${USE_GPU} -t ${TAG} .
+  --build-arg USE_GPU=${USE_GPU} \
+  --build-arg HOST_USER_ID=$(id -u ${USER}) \
+  --build-arg HOST_GROUP_ID=$(id -g ${USER}) \
+  -t ${TAG} \
+  .
