@@ -24,7 +24,9 @@ RUN apt-get -y install \
     libxext6 \
     libxrender1 \
     libopenmpi-dev \
-    zlib1g-dev
+    zlib1g-dev \
+    python-opengl \
+    xvfb
 
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/*
@@ -53,7 +55,7 @@ RUN groupadd -g $HOST_GROUP_ID appuser && \
 ENV USR_HOME /home/$USR
 ENV CODE_DIR $USR_HOME/GAIL-Formal_Methods
 
-ENV CMD_DIR scripts
+ENV CMD_DIR docker_scripts
 ENV CMD_SCRIPT docker-entrypoint.sh
 ENV CMD_PATH $CMD_DIR/$CMD_SCRIPT
 

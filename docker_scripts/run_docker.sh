@@ -31,16 +31,13 @@ fi
 #   - cpu
 #   - gpu
 
-counter=1
-
 for i in "$@"
 do
 
 case $i in
     -d=*|--device=*)
     DEVICE="${i#*=}"
-    shift # past argument
-    shift # past value
+    shift # past argument=value
     ;;
     *)
       # unknown option
@@ -49,7 +46,7 @@ esac
 done
 
 # anything not a kwarg is interpreted as a bash command to run in the container
-cmd_line_args="$1"
+cmd_line_args=$1
 
 # deciding which device image to run based on kwarg
 if [ "$DEVICE" = "gpu" ] || [ "$DEVICE" = "GPU" ]; then
@@ -80,7 +77,7 @@ else
 
 fi
 
-echo $cmd_line
+echo $cmd_line_args
 
 
 
@@ -113,7 +110,7 @@ args=(-it $NVIDIA_ARG --rm --network host --ipc=host \
 
 if [ -n "$cmd_line_args" ]
 then
-      # cmd_line args aren't empty, so user wants to use the env 
+      # cmd_line_args aren't empty, so user wants to use the env 
       # interactively without running the entrypoint
       args+=(bash -c "cd $CODE_LOC && $cmd_line_args")
 fi
