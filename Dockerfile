@@ -26,7 +26,8 @@ RUN apt-get -y install \
     libopenmpi-dev \
     zlib1g-dev \
     python-opengl \
-    xvfb
+    xvfb \
+    ffmpeg
 
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/*
