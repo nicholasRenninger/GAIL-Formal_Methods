@@ -141,6 +141,7 @@ RUN jt -t onedork -fs 95 -altp -tfs 11 -nfs 115 -cellw 88% -T -f firacode
 
 # add any packages here that the container application may need
 RUN pip install stable-baselines[mpi]
+RUN pip install gym-minigrid
 
 # cleanup
 RUN rm -rf $HOME/.cache/pip
