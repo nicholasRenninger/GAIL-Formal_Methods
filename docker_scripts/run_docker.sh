@@ -3,12 +3,31 @@
 # 
 # Example usage:
 #   
-#   run with a CPU-only image:
-#   - ./run_docker.sh --device=cpu $BASH_COMMAND
+#   1) run with a CPU-only image:
+#   ./run_docker.sh --device=cpu $OPTIONAL_BASH_COMMAND_FOR_INTERACTIVE_MODE
 #
-#   run with a GPU-enabled image:
-#   - ./run_docker.sh --device=gpu $BASH_COMMAND
-
+#   2) run with a GPU-enabled image:
+#   ./run_docker.sh --device=gpu $OPTIONAL_BASH_COMMAND_FOR_INTERACTIVE_MODE
+#
+#   3) run with a GPU-enabled image and start a jupyter notebook server with
+#   default network settings:
+#   ./run_docker.sh --device=gpu
+# 
+#   4) run with a GPU-enabled image and drop into the terminal:
+#   ./run_docker.sh --device=gpu bash
+#   
+#   5) run with a GPU-enabled image with the jupyter notebook served over a
+#      desired host port, in this example, port 8008:
+#   ./run_docker.sh --device=gpu --jupyterport=8008
+# 
+#   To access this notebook, make sure you can access port
+#   8008 on the host machine and then modify the generated jupyter url:
+#   e.g. http://127.0.0.1:8888/?token=TOKEN_STRING
+# 
+#   with the new, desired port number:
+#   e.g. http://127.0.0.1:8008/?token=TOKEN_STRING
+#   
+#   and paste this url into the host machine's browser.
 
 
 # TODO: always use new-style once sufficiently widely used 
