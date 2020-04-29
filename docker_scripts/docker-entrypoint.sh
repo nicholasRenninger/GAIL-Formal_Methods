@@ -5,4 +5,5 @@
 # harmlessly, I usually append || true to it.
 set -e
 
-jupyter notebook --no-browser --allow-root --port 1234
+# need to set ip to this for macOS to work
+jupyter notebook --no-browser --ip 0.0.0.0 --port=8888

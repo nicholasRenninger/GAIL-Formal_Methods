@@ -39,6 +39,10 @@ case $i in
     DEVICE="${i#*=}"
     shift # past argument=value
     ;;
+    -j=*|--jupyterport=*)
+    JUPYTER_PORT="${i#*=}"
+    shift # past argument=value
+    ;;
     *)
       # unknown option
     ;;
@@ -54,14 +58,18 @@ if [ "$DEVICE" = "gpu" ] || [ "$DEVICE" = "GPU" ]; then
   echo "Executing in the docker (gpu image):"
   CONTAINER_TAG="gail_formal_methods"
 
+  # need to add in an argument to the container runner enabling GPU hardware
+  # ONLY when using the GPU container image
+  args=($NVIDIA_ARG)
+
 elif [ "$DEVICE" = "cpu" ] || [ "$DEVICE" = "CPU" ]; then
 
-  echo "Executing in the docker (gpu image):"
+  echo "Executing in the docker (cpu image):"
   CONTAINER_TAG="gail_formal_methods-cpu"
 
 elif [ -z "$DEVICE" ]; then
 
-    # write error message to stderr
+  # write error message to stderr
   printf '%s\n' "not given kwarg: --device=  . Choose from: 'gpu' or 'cpu'" >&2 
 
   # or exit
@@ -74,7 +82,6 @@ else
 
   # or exit
   exit 1
-
 fi
 
 echo $cmd_line_args
@@ -104,14 +111,28 @@ CODE_LOC="/home/$CONTAINER_USER/GAIL-Formal_Methods"
 # give the hostname for a nice touch when using the box interactively
 CONTAINER_HOSTNAME="licious"
 
-args=(-it $NVIDIA_ARG --rm --network host --ipc=host \
+# allow the user to configure a different port for jupyter to run over on the
+# host in case the default 8888 is already in use, or if you just want to
+# change it
+if [ -n "$JUPYTER_PORT" ]; then 
+
+    args+=(-p=$JUPYTER_PORT:8888)
+else
+
+    # by default, always just connect to the standard 8888 port
+    args+=(-p=8888:8888)
+
+fi
+
+args+=(-it --rm \
   --name=$CONTAINER_NAME --hostname=$CONTAINER_HOSTNAME \
   --mount src=$(pwd),target=$CODE_LOC,type=bind $CONTAINER_ID)
 
-if [ -n "$cmd_line_args" ]
-then
-      # cmd_line_args aren't empty, so user wants to use the env 
-      # interactively without running the entrypoint
+
+# cmd_line_args aren't empty, so user wants to use the env 
+# interactively without running the entrypoint
+if [ -n "$cmd_line_args" ]; then
+
       args+=(bash -c "cd $CODE_LOC && $cmd_line_args")
 fi
 

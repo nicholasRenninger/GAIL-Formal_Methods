@@ -48,7 +48,7 @@ RUN rm -rf /var/lib/apt/lists/*
 # Source:
 # https://jtreminio.com/blog/running-docker-containers-as-current-host-user/
 ENV USR "ferg"
-RUN groupadd -g $HOST_GROUP_ID appuser && \
+RUN groupadd -og $HOST_GROUP_ID appuser && \
     useradd -r -u $HOST_USER_ID -g appuser $USR
 
 # these configure where the working dir will be, and where the startup script
