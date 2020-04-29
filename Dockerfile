@@ -26,8 +26,10 @@ RUN apt-get -y install \
     libopenmpi-dev \
     zlib1g-dev \
     python-opengl \
-    xvfb \
-    ffmpeg
+    ffmpeg \
+    freeglut3-dev \
+    swig \
+    xvfb
 
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/*
@@ -86,6 +88,9 @@ ENV PATH="$USR_HOME/.local/bin:${PATH}"
 # upgrade pip while still root
 RUN pip install --upgrade pip
 
+# wow wtf. this NEEDS to be removed as it is not compatible with python>=3.6 GG
+RUN pip uninstall -y enum34
+
 # now Transform™ into the user -> no more root for le safeties
 # need to install everything as the desired user, not as root, or you'll have
 # permissions problems
@@ -140,8 +145,14 @@ RUN jt -t onedork -fs 95 -altp -tfs 11 -nfs 115 -cellw 88% -T -f firacode
 #######################################
 
 # add any packages here that the container application may need
-RUN pip install stable-baselines[mpi]
-RUN pip install gym-minigrid
+RUN pip install --user stable-baselines[mpi]
+RUN pip install --user gym-minigrid
+RUN pip install --user box2d-py==2.3.5
+RUN pip install --user pybullet
+RUN pip install --user gym-minigrid
+RUN pip install --user scikit-optimize
+RUN pip install --user optuna
+RUN pip install --user pytablewriter
 
 # cleanup
 RUN rm -rf $HOME/.cache/pip
