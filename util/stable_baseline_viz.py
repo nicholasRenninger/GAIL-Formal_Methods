@@ -34,11 +34,12 @@ def show_videos(video_path='', prefix=''):
 # We will record a video using the
 # stable_baselines VecVideoRecorder wrapper
 def record_video(model, env_id=None, eval_env=None,
-                 video_length=500, video_prefix='', video_folder='videos/'):
+                 max_video_length=500, video_prefix='',
+                 video_folder='videos/'):
     """
     :param env_id: (str)
     :param model: (RL model)
-    :param video_length: (int)
+    :param max_video_length: (int)
     :param video_prefix: (str)
     :param video_folder: (str)
     """
@@ -50,13 +51,16 @@ def record_video(model, env_id=None, eval_env=None,
     # Start the video at step=0 and record 500 steps
     eval_env = VecVideoRecorder(eval_env, video_folder=video_folder,
                                 record_video_trigger=lambda step: step == 0,
-                                video_length=video_length,
+                                video_length=max_video_length,
                                 name_prefix=video_prefix)
 
     obs = eval_env.reset()
-    for _ in range(video_length):
+    for _ in range(max_video_length):
         action, _ = model.predict(obs)
-        obs, _, _, _ = eval_env.step(action)
+        obs, _, done, _ = eval_env.step(action)
+
+        if done:
+            break
 
     # Close the video recorder
     eval_env.close()
