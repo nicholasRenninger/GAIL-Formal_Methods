@@ -33,16 +33,17 @@ def show_videos(video_path='', prefix=''):
 
 # We will record a video using the
 # stable_baselines VecVideoRecorder wrapper
-def record_video(model, env_id, eval_env=None, video_length=500, prefix='',
-                 video_folder='videos/'):
+def record_video(model, env_id=None, eval_env=None,
+                 video_length=500, video_prefix='', video_folder='videos/'):
     """
     :param env_id: (str)
     :param model: (RL model)
     :param video_length: (int)
-    :param prefix: (str)
+    :param video_prefix: (str)
     :param video_folder: (str)
     """
 
+    # directly passing an environment overrides passing in an env
     if eval_env is None:
         eval_env = DummyVecEnv([lambda: gym.make(env_id)])
 
@@ -50,7 +51,7 @@ def record_video(model, env_id, eval_env=None, video_length=500, prefix='',
     eval_env = VecVideoRecorder(eval_env, video_folder=video_folder,
                                 record_video_trigger=lambda step: step == 0,
                                 video_length=video_length,
-                                name_prefix=prefix)
+                                name_prefix=video_prefix)
 
     obs = eval_env.reset()
     for _ in range(video_length):
