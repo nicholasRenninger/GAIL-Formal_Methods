@@ -33,7 +33,7 @@ def show_videos(video_path='', prefix=''):
 
 # We will record a video using the
 # stable_baselines VecVideoRecorder wrapper
-def record_video(env_id, model, video_length=500, prefix='',
+def record_video(model, env_id, eval_env=None, video_length=500, prefix='',
                  video_folder='videos/'):
     """
     :param env_id: (str)
@@ -43,7 +43,8 @@ def record_video(env_id, model, video_length=500, prefix='',
     :param video_folder: (str)
     """
 
-    eval_env = DummyVecEnv([lambda: gym.make(env_id)])
+    if eval_env is None:
+        eval_env = DummyVecEnv([lambda: gym.make(env_id)])
 
     # Start the video at step=0 and record 500 steps
     eval_env = VecVideoRecorder(eval_env, video_folder=video_folder,
