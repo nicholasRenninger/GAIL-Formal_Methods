@@ -42,7 +42,7 @@ fi
 
 # BELOW is my configuration
 
-tensorboard --logdir ${CODE_DIR}/logs
+tensorboard --host 0.0.0.0 --logdir ${CODE_DIR}/logs --port 6006 &
 
 # need to set ip to this for macOS to work
 jupyter notebook --no-browser --ip 0.0.0.0 --port=8888

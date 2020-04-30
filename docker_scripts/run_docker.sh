@@ -19,18 +19,29 @@
 #   5) run with a GPU-enabled image with the jupyter notebook served over a
 #      desired host port, in this example, port 8008, with tensorboard
 #      configured to run on port 6006:
-#   ./run_docker.sh --device=gpu --jupyterport=8008 --tensorboardport=6006
+#   ./run_docker.sh --device=gpu --jupyterport=8008 --tensorboardport=6969
 # 
-#   To access this notebook, make sure you can access port
-#   8008 on the host machine and then modify the generated jupyter url:
-#   (e.g.) http://127.0.0.1:8888/?token=TOKEN_STRING
+#   To access this notebook, 
+#   
+#   make sure you can access port 8008 on the host machine and then modify the
+#   generated jupyter url:
+#   (e.g.) http://localhost:8888/?token=TOKEN_STRING
 # 
 #   with the new, desired port number:
-#   (e.g.) http://127.0.0.1:8008/?token=TOKEN_STRING
+#   (e.g.) http://localhost:8008/?token=TOKEN_STRING
 #   
-#   and paste this url into the host machine's browser. To access tensorboard,
-#   paste the normal tensorboard url:
-#   (e.g. TensorBoard 2.X.X) http://localhost:6006
+#   and paste this url into the host machine's browser. 
+#   
+#   To access tensorboard,
+#   make sure you can access port 6969 on the host machine and then modify the
+#   generated tensorboard  url:
+#
+#   (e.g. TensorBoard 1.15.0) http://0.0.0.0:6006/
+#
+#   with the new, desired port number:
+#   (e.g.) http://localhost:6969
+#   
+#   and paste this url into the host machine's browser. 
 
 
 # TODO: always use new-style once sufficiently widely used 
@@ -147,6 +158,19 @@ else
 
     # by default, always just connect to the standard 8888 port
     args+=(-p=8888:8888)
+
+fi
+
+# allow the user to configure a different port for tensorboard to run over on
+# the host in case the default 6006 is already in use, or if you just want to
+# change it
+if [ -n "$TENSORBOARD_PORT" ]; then 
+
+    args+=(-p=$TENSORBOARD_PORT:6006)
+else
+
+    # by default, always just connect to the TB standard 6006 port
+    args+=(-p=6006:6006)
 
 fi
 
