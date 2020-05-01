@@ -4,3 +4,6 @@
 [submodule "rl-baselines-zoo"]
 	path = rl_baselines_zoo
 	url = https://github.com/araffin/rl-baselines-zoo
+[submodule "stable-baselines"]
+	path = stable-baselines
+	url = https://github.com/hill-a/stable-baselines.git
