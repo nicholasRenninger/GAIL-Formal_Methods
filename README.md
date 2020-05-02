@@ -19,7 +19,7 @@ This project is based on [stable-baselines](https://stable-baselines.readthedocs
 
 *I will likely be changing to the [imitation](https://github.com/HumanCompatibleAI/imitation) library instead of stable-baselines for the GAIL implementation, as stable-baselines has decided to drop support for GAIL and also imitation has a PPO-based GAIL learned (definitely better than the older TRPO GAIL learner in stable-baselines).*
 
----
+
 
 ## Results
 
