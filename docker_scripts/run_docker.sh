@@ -18,8 +18,8 @@
 #   
 #   5) run with a GPU-enabled image with the jupyter notebook served over a
 #      desired host port, in this example, port 8008, with tensorboard
-#      configured to run on port 6006:
-#   ./run_docker.sh --device=gpu --jupyterport=8008 --tensorboardport=6969
+#      configured to run on port 6007:
+#   ./run_docker.sh --device=gpu --jupyterport=8008 --tensorboardport=6007
 # 
 #   To access this notebook, 
 #   
@@ -33,13 +33,13 @@
 #   and paste this url into the host machine's browser. 
 #   
 #   To access tensorboard,
-#   make sure you can access port 6969 on the host machine and then modify the
+#   make sure you can access port 6007 on the host machine and then modify the
 #   generated tensorboard  url:
 #
 #   (e.g. TensorBoard 1.15.0) http://0.0.0.0:6006/
 #
 #   with the new, desired port number:
-#   (e.g.) http://localhost:6969
+#   (e.g.) http://localhost:6007
 #   
 #   and paste this url into the host machine's browser. 
 
