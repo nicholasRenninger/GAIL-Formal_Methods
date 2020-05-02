@@ -126,20 +126,31 @@ Basically, you first train an expert agent using RL (in this case with PPO2), co
 
 **To access the jupyter notebook:**
 make sure you can access port 8008 on the host machine and then modify the generated jupyter url:
-(e.g.) `http://localhost:8888/?token=TOKEN_STRING`
+
+```bash
+http://localhost:8888/?token=TOKEN_STRING
+```
 
 with the new, desired port number:
-(e.g.) `http://localhost:8008/?token=TOKEN_STRING`
+
+```bash
+http://localhost:8008/?token=TOKEN_STRING
+```
 
 and paste this url into the host machine's browser. 
 
 **To access tensorboard:**
 make sure you can access port 6996 on the host machine and then modify the generated tensorboard  url:
 
-(e.g. TensorBoard 1.15.0) `http://0.0.0.0:6006/`
+(e.g. TensorBoard 1.15.0) 
+```bash
+http://0.0.0.0:6006/
+```
 
 with the new, desired port number:
-(e.g.) `http://localhost:6996`
+```bash
+http://localhost:6996
+```
 
 and paste this url into the host machine's browser. 
 
