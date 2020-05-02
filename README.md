@@ -130,7 +130,7 @@ and paste this url into the host machine's browser.
 
 This repo houses a docker container with `jupyter` and `tensorbaord` services running. If you have a NVIDIA GPU, check [here](https://developer.nvidia.com/cuda-gpus#compute) to see if your GPU can support CUDA. If so, then you can use the GPU-only instruction below.
 
-[docker-install](### Install Docker and Pre-requisties)
+### Install Docker and Pre-requisties
 
 Follow steps one (and two if you have a CUDA-enabled GPU) from [this guide](https://www.tensorflow.org/install/docker) from tensorflow to prepare your computer for the tensorflow docker base container images. **Don't** actually install the tensorflow container, that will happen automatically later.
 
@@ -147,12 +147,12 @@ cd GAIL-Formal_Methods
  ```
  
  The container builder uses `make`:
- * If you **have a CUDA-enabled GPU** and thus you followed step 2 of the #docker-install, then run:
+ * If you **have a CUDA-enabled GPU** and thus you followed step 2 of the [docker install](https://github.com/nicholasRenninger/GAIL-Formal_Methods/blob/master/README.md#post-installation), then run:
  ```bash
 make docker-gpu
 ```
 
-* If you **don't have a CUDA-enabled GPU** and thus you **didn't** follow step 2 of the #docker-install, then run:
+* If you **don't have a CUDA-enabled GPU** and thus you **didn't** follow step 2 of the https://github.com/nicholasRenninger/GAIL-Formal_Methods/blob/master/README.md#post-installation, then run:
  ```bash
 make docker-cpu
 ```
