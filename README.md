@@ -4,10 +4,12 @@ A project experimenting with Generative Adversarial Imitation Learning and Forma
 Currently, the container-based environment has been tested to work on both windows and macOS, for machines with and without GPU support.
 
 **Table of Contents**
-* (about-this-repo)
+* [About](https://github.com/nicholasRenninger/GAIL-Formal_Methods/blob/master/README.md#about)
+* [Results](https://github.com/nicholasRenninger/GAIL-Formal_Methods/blob/master/README.md#results)
+* [Methodology](https://github.com/nicholasRenninger/GAIL-Formal_Methods/blob/master/README.md#methodology)
+* [Container Usage](https://github.com/nicholasRenninger/GAIL-Formal_Methods/blob/master/README.md#container-usage)
+* [Installation](https://github.com/nicholasRenninger/GAIL-Formal_Methods/blob/master/README.md#installation)
 
-
----
 
 ## About
 
@@ -24,7 +26,7 @@ This project is based on [stable-baselines](https://stable-baselines.readthedocs
 Here are some of the results from the GAIL experiments. Right now, I have a small bug somewhere in the training of GAIL, so it does not work - I've been trying to fix GAIL for weeks now. On the bright side, I think I just accidentally created an extremely powerful, general-purpose reinforcement learning algorithm to become the mathematically optimal game troll.
 
 
-#### Final Policies
+### Final Policies
 
 Here are videos of the agents one of the DeepMind AI Safety environments. Here, the agent must get to the green goal while always avoiding the lava. 
 
@@ -36,7 +38,9 @@ Here are videos of the agents one of the DeepMind AI Safety environments. Here, 
 
 <img src="https://github.com/nicholasRenninger/GAIL-Formal_Methods/blob/master/results/learner.gif">
 
-#### Expert Demonstrator
+---
+
+### Expert Demonstrator Training
 
 To get an expert demonstrator for this environment, I used the [stable-baselines PPO2 implementation](https://stable-baselines.readthedocs.io/en/master/modules/ppo2.html). See the jupyter notebook for hyperparameters.
 
@@ -50,7 +54,9 @@ To get an expert demonstrator for this environment, I used the [stable-baselines
 *The final PPO2 entropy loss as a function of training step.*
 <img src="https://github.com/nicholasRenninger/GAIL-Formal_Methods/blob/master/results/expert_loss.png">
 
-#### Imitation Learner
+---
+
+### Imitation Learner Training
 
 To train an imitation learner for this environment, I used the [stable-baselines GAIL implementation](https://stable-baselines.readthedocs.io/en/master/modules/gail.html). See the jupyter notebook for hyperparameters.
 
@@ -69,12 +75,12 @@ To train an imitation learner for this environment, I used the [stable-baselines
 *The final GAIL policy network discounted ”reward” signal from the descriminator as a function of training step.*
 <img src="https://github.com/nicholasRenninger/GAIL-Formal_Methods/blob/master/results/gail_policy_net_reward_signal.png">
 
----
+
 ## Methodology
 
 Basically, you first train an expert agent using RL (in this case with PPO2), collect sampled trajectories from the trained expert, and then train the imitation learner (in this case with GAIL) using those state-action pairs. GAIL has access to the environment as a dynamics model, but not the reward signal. It must train a robust policy using only the expert demonstrations as the specification of the task.
 
----
+
 
 ## Container Usage
 
@@ -95,6 +101,8 @@ Basically, you first train an expert agent using RL (in this case with PPO2), co
 
 * run a bash command in a GPU-enabled image interactively:
   ./run_docker.sh --device=gpu $OPTIONAL_BASH_COMMAND_FOR_INTERACTIVE_MODE
+
+---
 
 ### Accessing the Jupyter and Tensorboard Servers
 
@@ -117,7 +125,6 @@ with the new, desired port number:
 
 and paste this url into the host machine's browser. 
 
----
 
 ## Installation
 
