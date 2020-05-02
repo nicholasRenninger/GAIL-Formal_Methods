@@ -35,7 +35,7 @@ def show_videos(video_path='', prefix=''):
 # stable_baselines VecVideoRecorder wrapper
 def record_video(model, env_id=None, eval_env=None,
                  max_video_length=500, video_prefix='',
-                 video_folder='videos/'):
+                 video_folder='videos/', break_early=False):
     """
     :param env_id: (str)
     :param model: (RL model)
@@ -59,7 +59,7 @@ def record_video(model, env_id=None, eval_env=None,
         action, _ = model.predict(obs)
         obs, _, done, _ = eval_env.step(action)
 
-        if done:
+        if done and break_early:
             break
 
     # Close the video recorder

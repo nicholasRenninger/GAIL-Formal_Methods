@@ -50,7 +50,7 @@ class TRPO(ActorCriticRLModel):
     def __init__(self, policy, env, gamma=0.99, timesteps_per_batch=1024, max_kl=0.01, cg_iters=10, lam=0.98,
                  entcoeff=0.0, cg_damping=1e-2, vf_stepsize=3e-4, vf_iters=3, verbose=0, tensorboard_log=None,
                  _init_setup_model=True, policy_kwargs=None, full_tensorboard_log=False,
-                 seed=None, n_cpu_tf_sess=1):
+                 seed=None, n_cpu_tf_sess=1, normalize=True):
         super(TRPO, self).__init__(policy=policy, env=env, verbose=verbose, requires_vec_env=False,
                                    _init_setup_model=_init_setup_model, policy_kwargs=policy_kwargs,
                                    seed=seed, n_cpu_tf_sess=n_cpu_tf_sess)
@@ -75,6 +75,7 @@ class TRPO(ActorCriticRLModel):
         self.g_step = 1
         self.d_step = 1
         self.d_stepsize = 3e-4
+        self.normalize = normalize
 
         self.graph = None
         self.sess = None
@@ -131,7 +132,8 @@ class TRPO(ActorCriticRLModel):
                 if self.using_gail:
                     self.reward_giver = TransitionClassifier(self.observation_space, self.action_space,
                                                              self.hidden_size_adversary,
-                                                             entcoeff=self.adversary_entcoeff)
+                                                             entcoeff=self.adversary_entcoeff,
+                                                             normalize=self.normalize)
 
                 # Construct network for new policy
                 self.policy_pi = self.policy(self.sess, self.observation_space, self.action_space, self.n_envs, 1,
