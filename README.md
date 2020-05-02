@@ -147,12 +147,12 @@ cd GAIL-Formal_Methods
  ```
  
  The container builder uses `make`:
- * If you **have a CUDA-enabled GPU** and thus you followed step 2 of the [docker install](https://github.com/nicholasRenninger/GAIL-Formal_Methods/blob/master/README.md#post-installation), then run:
+ * If you **have a CUDA-enabled GPU** and thus you followed step 2 of the docker install section above, then run:
  ```bash
 make docker-gpu
 ```
 
-* If you **don't have a CUDA-enabled GPU** and thus you **didn't** follow step 2 of the https://github.com/nicholasRenninger/GAIL-Formal_Methods/blob/master/README.md#post-installation, then run:
+* If you **don't have a CUDA-enabled GPU** and thus you **didn't** follow step 2 of the docker install section above, then run:
  ```bash
 make docker-cpu
 ```
