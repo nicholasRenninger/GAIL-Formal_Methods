@@ -85,22 +85,40 @@ Basically, you first train an expert agent using RL (in this case with PPO2), co
 ## Container Usage
 
 * **run with a GPU-enabled image and start a jupyter notebook server with default network settings:**
-  ./run_docker.sh --device=gpu
+  
+  ```bash
+  ./docker_scripts/run_docker.sh --device=gpu
+  ```
 
 * **run with a CPU-only image and start a jupyter notebook server with default network settings:**
-  ./run_docker.sh --device=cpu
   
-* run with a GPU-enabled image with the jupyter notebook served over a desired host port, in this example, port 8008, with tensorboard configured to run on port 6996:
-  ./run_docker.sh --device=gpu --jupyterport=8008 --tensorboardport=6996
+  ```bash
+  ./docker_scripts/run_docker.sh --device=cpu
+  ```
+  
+* run with a GPU-enabled image with the jupyter notebook served over a desired host port, in this example, port 8008, with tensorboard configured to run on port 6996. You might do this if you have other services on your host machine running over `localhost:8888` and/or `localhost:6666`:
+  
+   ```bash
+   ./docker_scripts/run_docker.sh --device=gpu --jupyterport=8008 --tensorboardport=6996
+   ```
 
 * run with a GPU-enabled image and drop into the terminal:
-  ./run_docker.sh --device=gpu bash
+  
+  ```bash
+  ./docker_scripts/run_docker.sh --device=gpu bash
+  ```
 
 * run a bash command in a CPU-only image interactively:
-  ./run_docker.sh --device=cpu $OPTIONAL_BASH_COMMAND_FOR_INTERACTIVE_MODE
+  
+  ```bash
+  ./docker_scripts/run_docker.sh --device=cpu $OPTIONAL_BASH_COMMAND_FOR_INTERACTIVE_MODE
+  ```
 
 * run a bash command in a GPU-enabled image interactively:
-  ./run_docker.sh --device=gpu $OPTIONAL_BASH_COMMAND_FOR_INTERACTIVE_MODE
+  
+  ```bash
+  ./docker_scripts/run_docker.sh --device=gpu $OPTIONAL_BASH_COMMAND_FOR_INTERACTIVE_MODE
+  ```
 
 ---
 
