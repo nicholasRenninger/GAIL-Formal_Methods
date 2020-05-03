@@ -1,7 +1,7 @@
 # GAIL-Formal_Methods
 A project experimenting with Generative Adversarial Imitation Learning and Formal Methods. 
 
-Currently, the container-based environment has been tested to work on both windows and macOS, for machines with and without GPU support.
+Currently, the container-based environment has been tested to work on both Ubuntu (GPU / CPU) and macOS (CPU-only) hosts.
 
 **Table of Contents**
 * [About](https://github.com/nicholasRenninger/GAIL-Formal_Methods/blob/master/README.md#about)
