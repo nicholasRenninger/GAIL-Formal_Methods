@@ -115,7 +115,6 @@ RUN pip install --user jupyterthemes \
 
 # configure jupyter notebook extensions
 RUN jupyter contrib nbextension install --user
-RUN jupyter nbextension enable latex_envs/latex_envs
 RUN jupyter nbextension enable autosavetime/main
 RUN jupyter nbextension enable collapsible_headings/main
 RUN jupyter nbextension enable livemdpreview/livemdpreview
@@ -130,13 +129,11 @@ RUN jupyter nbextension enable codefolding/edit
 RUN jupyter nbextension enable freeze/main
 RUN jupyter nbextension enable runtools/main
 RUN jupyter nbextension enable codemirror_mode_extensions/main
+RUN jupyter nbextension enable select_keymap/main
+RUN jupyter nbextension enable varInspector/main
 
 # configure jupyter notebook theme
 RUN jt -t onedork -fs 95 -altp -tfs 11 -nfs 115 -cellw 88% -T -f firacode
-
-# try to get sublime keymaps
-RUN mkdir -p "$(jupyter --config-dir)/custom/"
-RUN echo "require(["codemirror/keymap/sublime", "notebook/js/cell", "base/js/namespace"], function(sublime_keymap, cell, IPython) { // setTimeout(function(){ // uncomment line to fake race-condition cell.Cell.options_default.cm_config.keyMap = 'sublime'; var cells = IPython.notebook.get_cells(); for(var cl=0; cl< cells.length ; cl++){ cells[cl].code_mirror.setOption('keyMap', 'sublime'); } // }, 1000)// uncomment line to fake race condition } );" >> $(jupyter --config-dir)/custom/custom.js
 
 
 #######################################
