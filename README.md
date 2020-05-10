@@ -1,5 +1,5 @@
 # GAIL-Formal_Methods
-A project experimenting with Generative Adversarial Imitation Learning and Formal Methods. 
+A project experimenting with **Generative Adversarial Imitation Learning (GAIL)** and Formal Methods. 
 
 Currently, the container-based environment has been tested to work on both Ubuntu (GPU / CPU) and macOS (CPU-only) hosts.
 
